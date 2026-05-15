@@ -8,7 +8,8 @@ Do not over-extract assets.
 Most UI should be rebuilt with code.
 
 Code-first does not mean asset-blind.
-If visible assets carry the design's fidelity or brand feel, produce an Asset Manifest before implementation.
+Produce an Asset Manifest for every image-based design-to-code request.
+If no formal assets are required, say that explicitly in the manifest.
 
 ## Asset decisions
 
@@ -77,7 +78,9 @@ Only create an image asset when:
 - the element materially affects the selected design direction
 - it is worth the implementation cost
 
-Even when creating zero new assets, still list visible asset decisions in an Asset Manifest when the reference includes:
+Even when creating zero new assets, still list visible asset decisions in an Asset Manifest.
+
+Pay special attention when the reference includes:
 
 - empty-state illustrations
 - official source logos or platform badges
@@ -144,14 +147,17 @@ transparent / white / green-screen / solid color / no preference
 ## Page
 [page name]
 
-| id | area | decision | output | required for MVP | notes |
-|---|---|---|---|---|---|
-| app-logo | top nav | Source | existing logo component | yes | do not redraw |
-| empty-illustration | empty state | Generate | PNG transparent 1024x1024 | no | use CSS fallback until ready |
-| tab-icons | bottom nav | Code | icon library | yes | do not crop from mockup |
-| background-noise | page bg | Ignore | none | no | low value |
-| source-logo | list/card source mark | Source | official logo asset | yes | do not redraw; ask user if missing |
-| cover-placeholder | card cover visual | Source/Generate/Fallback | existing cover image or generated placeholder | no | fallback is temporary if visual fidelity matters |
+## Summary
+[formal assets required / no formal assets required]
+
+| id | area | decision | output | required for MVP | fallback | needs user decision | notes |
+|---|---|---|---|---|---|---|---|
+| app-logo | top nav | Source | existing logo component | yes | text label | yes if missing | do not redraw |
+| empty-illustration | empty state | Generate | PNG transparent 1024x1024 | no | simple CSS empty state | yes | use fallback until approved |
+| tab-icons | bottom nav | Code | icon library | yes | icon library | no | do not crop from mockup |
+| background-noise | page bg | Ignore | none | no | none | no | low value |
+| source-logo | list/card source mark | Source | official logo asset | yes | text/source initials | yes if missing | do not redraw; ask user if missing |
+| cover-placeholder | card cover visual | Source/Generate/Fallback | existing cover image or generated placeholder | no | gradient placeholder | yes if fidelity matters | fallback is temporary if visual fidelity matters |
 ```
 
 ## Transparency rule
@@ -197,7 +203,7 @@ Never:
 Always:
 
 - provide a fallback
-- produce an Asset Manifest when visible assets affect fidelity
+- produce an Asset Manifest for every image-based design-to-code request
 - ask whether Source or Generate assets should be supplied when a fallback would noticeably reduce fidelity
 - save assets with clear names
 - document target display size

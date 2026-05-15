@@ -8,7 +8,7 @@ This skill does not try to fully automate design generation. It focuses on:
 - identifying the role of reference images
 - producing a visible visual reading summary before implementation
 - producing a visible design translation summary before implementation
-- producing an Asset Manifest when visual assets affect fidelity
+- producing an Asset Manifest for image-based requests
 - translating design intent into implementation instructions
 - deciding what should be code vs image asset
 - asking for image assets only when needed
@@ -56,10 +56,10 @@ It does not:
 
 5. Asset Workflow
    Decide what should be code, source asset, generated asset, fallback, or ignored.
-   Produce an Asset Manifest when visible assets such as illustrations, logos, cover art, badges, or placeholders affect fidelity.
+   Produce an Asset Manifest for image-based requests, even when no formal assets are required.
 
 6. Implementation or Handoff
-   Always produce an Implementation Brief first, including concise Visual Reading and Design Translation summaries and an Asset Manifest when relevant.
+   Always produce an Implementation Brief first, including concise Visual Reading and Design Translation summaries and an Asset Manifest for image-based requests.
    If the user approves the brief, inspect the codebase and implement.
    If the user asks for a handoff only, stop after the brief.
 

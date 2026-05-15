@@ -26,7 +26,7 @@ Make sure these are known or assumed:
 - fidelity level
 - existing project constraints
 - code vs asset decisions
-- asset manifest when visible assets affect fidelity
+- asset manifest
 - required states
 - fallback strategy
 
@@ -73,10 +73,10 @@ Make sure these are known or assumed:
 |---|---|---|---|
 
 ## Asset manifest
-Use this when visible assets affect fidelity, even if the current implementation will use fallbacks.
+Use this for every image-based design-to-code request, even if the result is "no formal assets required".
 
-| id | area | decision | output | required for MVP | fallback | notes |
-|---|---|---|---|---|---|---|
+| id | area | decision | output | required for MVP | fallback | needs user decision | notes |
+|---|---|---|---|---|---|---|---|
 
 ## Existing constraints
 - reuse existing components:
@@ -109,7 +109,7 @@ Use this when visible assets affect fidelity, even if the current implementation
 - density:
 
 ## Code vs asset decisions
-[insert Asset Manifest or summary; do not omit when visible assets affect fidelity]
+[insert Asset Manifest or summary; do not omit for image-based requests]
 
 ## Required states
 - default
@@ -124,7 +124,7 @@ Use this when visible assets affect fidelity, even if the current implementation
 - Build structure first.
 - Use `references/02-visual-reading-checklist.md` to translate image details into code decisions.
 - Use `references/03-design-translation.md` to make source-of-truth, preserve/adapt/ignore, fidelity, and priority decisions explicit.
-- Use `references/04-asset-workflow.md` when the reference includes illustrations, logos, source badges, cover art, brand-like marks, or other visible assets.
+- Use `references/04-asset-workflow.md` for every image-based request.
 - Preserve the listed style carriers; do not only recreate the information architecture.
 - Do not silently downgrade visible style-carrying assets to CSS fallbacks; mark fallbacks and ask for confirmation.
 - Follow the approved Design Translation Summary; do not replace it with private reinterpretation during implementation.
