@@ -5,7 +5,10 @@
 Turn a UI image into implementation intent before writing code.
 
 Do not describe the image like an art critique.
-Extract structure, components, states, tokens, and asset decisions.
+Extract structure, components, states, tokens, style carriers, and asset decisions.
+
+The initial Implementation Brief must include a concise Visual Reading Summary.
+Do not hide visual reading as private notes when the user is asking for design-to-code work.
 
 ## When to use
 
@@ -119,7 +122,32 @@ Record:
 
 Avoid vague instructions like "make it premium" unless translated into concrete tokens.
 
-### 7. Code vs asset decision
+### 7. Style carriers
+
+Identify the few details that carry the design's recognizable flavor.
+
+These are the visual details that should be preserved more carefully than generic decoration.
+
+Common style carriers:
+
+- typography: language-specific weight, size hierarchy, line height, title/body contrast
+- whitespace: iOS-like breathing room, compact enterprise density, dense content rhythm
+- interaction color: selected state, focus ring, pressed state, active tab
+- primary action color: CTA fill, contrast, disabled state
+- surface treatment: white card, border strength, divider style, shadow, translucency
+- brand/source marks: official logos, platform icons, source badges
+- placeholders: cover art, avatar, empty-state illustration, generated artwork
+- navigation shape: app bar height, bottom tab style, floating action position
+
+For each style carrier, record:
+
+- what to preserve
+- whether it should be code, source asset, generated asset, or fallback
+- what may be simplified without losing the design direction
+
+Do not let information architecture crowd out the style carriers.
+
+### 8. Code vs asset decision
 
 For each distinct visual element, decide:
 
@@ -131,7 +159,7 @@ For each distinct visual element, decide:
 Do not use the full mockup as a page background.
 Do not crop normal UI controls from the image.
 
-### 8. Product gaps and hidden states
+### 9. Product gaps and hidden states
 
 List details not visible in the image but required for implementation:
 
@@ -186,6 +214,10 @@ List details not visible in the image but required for implementation:
 - shadow:
 - density:
 
+## Style Carriers
+| carrier | preserve | implementation decision | notes |
+|---|---|---|---|
+
 ## Code vs Asset
 | element | decision | reason |
 |---|---|---|
@@ -206,4 +238,5 @@ List details not visible in the image but required for implementation:
 ## Implementation rule
 
 When implementing after brief approval, use these notes as the bridge between the image and code.
-Do not include the full notes in the final answer unless the user asked for the design analysis.
+Include a concise Visual Reading Summary in the initial brief.
+Do not include the full notes after implementation unless the user asked for the design analysis.

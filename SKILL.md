@@ -24,6 +24,7 @@ Default to:
 - code over bitmap assets
 - implementation clarity over visual overfitting
 - brief before code edits
+- visible visual calibration before implementation
 - light exit checks over heavy QA
 
 ## Main workflow
@@ -33,7 +34,7 @@ Load references only when needed:
 1. For vague requests or missing product context, read `references/01-intake-and-reference-intent.md`.
 2. For any supplied mockup, screenshot, or visual reference, read `references/02-visual-reading-checklist.md` and `references/03-design-translation.md`.
 3. When the visual design contains complex illustrations, logos, 3D/glass objects, textures, or backgrounds, read `references/04-asset-workflow.md`.
-4. For every design-to-code request, read `references/05-implementation-handoff.md` and produce an Implementation Brief before editing code.
+4. For every design-to-code request, read `references/05-implementation-handoff.md` and produce an Implementation Brief with a visible Visual Reading Summary before editing code.
 5. Ask the user whether to proceed with implementation after the brief.
 6. Only after the user confirms implementation, use Implementation Mode and then use `references/06-exit-check.md` before finishing.
 
@@ -47,6 +48,7 @@ Never:
 - generate images without user approval unless the runtime explicitly allows it and the user asked for it
 - introduce heavy dependencies just to match a mockup
 - edit code before producing an Implementation Brief
+- hide visual reading as private notes when the user is calibrating or testing the design-to-code workflow
 - treat phrases like "build", "implement", "recreate", "restore", "还原", or "做出来" as approval to skip the brief
 - continue from brief to implementation until the user explicitly confirms
 
@@ -60,6 +62,8 @@ Always:
 - separate code decisions from asset decisions
 - record assumptions in design metadata
 - provide fallbacks for missing decorative assets
+- include a concise Visual Reading Summary in the initial brief
+- identify the style carriers that make the reference feel like itself
 - produce an Implementation Brief before implementation
 - ask for confirmation before editing code
 
@@ -78,6 +82,7 @@ Use when the user provides a mockup, screenshot, or design direction.
 Read `references/02-visual-reading-checklist.md` first when an image is available.
 
 Output:
+- concise Visual Reading Summary
 - source of truth
 - what to preserve
 - what may change
@@ -129,6 +134,8 @@ Output a concise implementation brief:
 - page goal
 - platform and viewport
 - reference intent
+- visual reading summary
+- style carriers
 - component structure
 - code-vs-asset decisions
 - assumptions
