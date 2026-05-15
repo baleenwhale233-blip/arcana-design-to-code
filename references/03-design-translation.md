@@ -14,6 +14,9 @@ Ask:
 5. What should become code?
 6. What should become image asset?
 
+The initial Implementation Brief must include a concise Design Translation Summary.
+Do not hide this as private reasoning when the user is doing design-to-code work.
+
 ## Priority order
 
 P0 — Product function
@@ -106,7 +109,7 @@ If the mockup conflicts with product logic, usability, or existing implementatio
 ## Output format
 
 ```md
-# Design Translation
+# Design Translation Summary
 
 ## Source of truth
 [what matters most: product task / IA / visual style / fidelity]
@@ -127,6 +130,10 @@ If the mockup conflicts with product logic, usability, or existing implementatio
 - radius/shadow:
 - material:
 
+## Fidelity decision
+- target:
+- reason:
+
 ## Preserve
 - ...
 
@@ -142,3 +149,8 @@ P1:
 P2:
 P3:
 ```
+
+## Brief rule
+
+Include this summary in the initial Implementation Brief.
+Do not proceed to implementation until the user has had a chance to confirm or correct the translation.

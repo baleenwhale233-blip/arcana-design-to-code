@@ -25,6 +25,7 @@ Default to:
 - implementation clarity over visual overfitting
 - brief before code edits
 - visible visual calibration before implementation
+- visible design translation before implementation
 - light exit checks over heavy QA
 
 ## Main workflow
@@ -34,7 +35,7 @@ Load references only when needed:
 1. For vague requests or missing product context, read `references/01-intake-and-reference-intent.md`.
 2. For any supplied mockup, screenshot, or visual reference, read `references/02-visual-reading-checklist.md` and `references/03-design-translation.md`.
 3. When the visual design contains complex illustrations, logos, 3D/glass objects, textures, or backgrounds, read `references/04-asset-workflow.md`.
-4. For every design-to-code request, read `references/05-implementation-handoff.md` and produce an Implementation Brief with a visible Visual Reading Summary before editing code.
+4. For every design-to-code request, read `references/05-implementation-handoff.md` and produce an Implementation Brief with visible Visual Reading and Design Translation summaries before editing code.
 5. Ask the user whether to proceed with implementation after the brief.
 6. Only after the user confirms implementation, use Implementation Mode and then use `references/06-exit-check.md` before finishing.
 
@@ -49,6 +50,7 @@ Never:
 - introduce heavy dependencies just to match a mockup
 - edit code before producing an Implementation Brief
 - hide visual reading as private notes when the user is calibrating or testing the design-to-code workflow
+- hide design translation as private reasoning when the user is doing design-to-code work
 - treat phrases like "build", "implement", "recreate", "restore", "还原", or "做出来" as approval to skip the brief
 - continue from brief to implementation until the user explicitly confirms
 
@@ -63,6 +65,7 @@ Always:
 - record assumptions in design metadata
 - provide fallbacks for missing decorative assets
 - include a concise Visual Reading Summary in the initial brief
+- include a concise Design Translation Summary in the initial brief
 - identify the style carriers that make the reference feel like itself
 - produce an Implementation Brief before implementation
 - ask for confirmation before editing code
@@ -83,6 +86,7 @@ Read `references/02-visual-reading-checklist.md` first when an image is availabl
 
 Output:
 - concise Visual Reading Summary
+- concise Design Translation Summary
 - source of truth
 - what to preserve
 - what may change
@@ -98,6 +102,7 @@ Phrases like "build", "implement", "recreate", "restore", "还原", or "做出�
 
 Process:
 - follow the approved Implementation Brief
+- preserve the approved Visual Reading Summary, Design Translation Summary, style carriers, and asset decisions
 - inspect the existing codebase before choosing components or routes
 - identify reusable components, styles, tokens, data models, and routing conventions
 - translate the visual reference into component structure and implementation tasks
@@ -135,6 +140,7 @@ Output a concise implementation brief:
 - platform and viewport
 - reference intent
 - visual reading summary
+- design translation summary
 - style carriers
 - component structure
 - code-vs-asset decisions

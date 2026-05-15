@@ -7,6 +7,7 @@ This skill does not try to fully automate design generation. It focuses on:
 - understanding the product goal
 - identifying the role of reference images
 - producing a visible visual reading summary before implementation
+- producing a visible design translation summary before implementation
 - translating design intent into implementation instructions
 - deciding what should be code vs image asset
 - asking for image assets only when needed
@@ -50,13 +51,13 @@ It does not:
    Extract viewport, layout blocks, user flow, component inventory, visual tokens, style carriers, asset decisions, and hidden states.
 
 4. Design Translation
-   Convert the reference into product structure, visual priorities, and implementation rules.
+   Convert the reference into explicit source-of-truth, preserve/adapt/ignore, fidelity, and implementation-priority decisions.
 
 5. Asset Workflow
    Decide what should be code, source asset, generated asset, or ignored.
 
 6. Implementation or Handoff
-   Always produce an Implementation Brief first, including a concise Visual Reading Summary.
+   Always produce an Implementation Brief first, including concise Visual Reading and Design Translation summaries.
    If the user approves the brief, inspect the codebase and implement.
    If the user asks for a handoff only, stop after the brief.
 

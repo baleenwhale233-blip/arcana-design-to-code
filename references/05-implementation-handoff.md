@@ -17,6 +17,7 @@ Only use Implementation Mode from `SKILL.md` after the user approves the brief a
 Make sure these are known or assumed:
 
 - visual reading notes
+- design translation summary
 - style carriers
 - product/page goal
 - platform
@@ -54,6 +55,17 @@ Make sure these are known or assumed:
 - visual tokens:
 - style carriers:
 - code-vs-asset summary:
+
+## Design translation summary
+- source of truth:
+- user task:
+- information structure:
+- visual direction:
+- fidelity decision:
+- preserve:
+- adapt:
+- ignore:
+- implementation priorities:
 
 ## Style carriers to preserve
 | carrier | preserve | implementation decision | notes |
@@ -104,7 +116,9 @@ Make sure these are known or assumed:
 ## Implementation rules
 - Build structure first.
 - Use `references/02-visual-reading-checklist.md` to translate image details into code decisions.
+- Use `references/03-design-translation.md` to make source-of-truth, preserve/adapt/ignore, fidelity, and priority decisions explicit.
 - Preserve the listed style carriers; do not only recreate the information architecture.
+- Follow the approved Design Translation Summary; do not replace it with private reinterpretation during implementation.
 - Match information hierarchy before visual decoration.
 - Prefer code for layout and normal UI.
 - Use image assets only where listed.
