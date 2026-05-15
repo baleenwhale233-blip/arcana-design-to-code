@@ -7,6 +7,9 @@ Decide which visual elements should be code, existing source assets, generated a
 Do not over-extract assets.
 Most UI should be rebuilt with code.
 
+Code-first does not mean asset-blind.
+If visible assets carry the design's fidelity or brand feel, produce an Asset Manifest before implementation.
+
 ## Asset decisions
 
 For each visually distinct element, choose one:
@@ -61,6 +64,7 @@ Examples:
 - 3D/glass/soft object
 - complex decorative artwork
 - brand-like visual motif
+- cover art placeholder that defines the card feel
 
 ## Default
 
@@ -72,6 +76,14 @@ Only create an image asset when:
 - the element is reusable
 - the element materially affects the selected design direction
 - it is worth the implementation cost
+
+Even when creating zero new assets, still list visible asset decisions in an Asset Manifest when the reference includes:
+
+- empty-state illustrations
+- official source logos or platform badges
+- cover art, album art, product thumbnails, avatars, or placeholders
+- brand-like marks or visual motifs
+- artwork that gives the UI its finished feel
 
 ## Image generation permission
 
@@ -87,6 +99,9 @@ When an asset is missing:
 
 3. If user explicitly allows Codex/imagegen:
    generate or edit the asset directly.
+
+CSS fallback is a temporary implementation decision, not a substitute for asset planning.
+If a fallback replaces a visible style carrier, mark it clearly in the Asset Manifest and ask whether it should become a Source or Generate asset before implementation.
 
 ## Image Request template
 
@@ -135,6 +150,8 @@ transparent / white / green-screen / solid color / no preference
 | empty-illustration | empty state | Generate | PNG transparent 1024x1024 | no | use CSS fallback until ready |
 | tab-icons | bottom nav | Code | icon library | yes | do not crop from mockup |
 | background-noise | page bg | Ignore | none | no | low value |
+| source-logo | list/card source mark | Source | official logo asset | yes | do not redraw; ask user if missing |
+| cover-placeholder | card cover visual | Source/Generate/Fallback | existing cover image or generated placeholder | no | fallback is temporary if visual fidelity matters |
 ```
 
 ## Transparency rule
@@ -180,6 +197,8 @@ Never:
 Always:
 
 - provide a fallback
+- produce an Asset Manifest when visible assets affect fidelity
+- ask whether Source or Generate assets should be supplied when a fallback would noticeably reduce fidelity
 - save assets with clear names
 - document target display size
 - keep image assets separate and reusable

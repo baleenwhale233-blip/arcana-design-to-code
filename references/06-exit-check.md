@@ -15,6 +15,7 @@ Before finishing, check:
 - Buttons and inputs are usable.
 - Required empty/loading/error/success states are not obviously missing.
 - Custom assets are either integrated or replaced with acceptable fallbacks.
+- Asset fallbacks match the approved Asset Manifest; Source/Generate assets are not silently downgraded.
 - The implementation does not use the mockup as a full-page image.
 - Ordinary UI controls are implemented as code, not cropped images.
 - The implementation does not introduce unnecessary dependencies.

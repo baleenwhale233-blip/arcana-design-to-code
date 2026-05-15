@@ -26,6 +26,7 @@ Make sure these are known or assumed:
 - fidelity level
 - existing project constraints
 - code vs asset decisions
+- asset manifest when visible assets affect fidelity
 - required states
 - fallback strategy
 
@@ -71,6 +72,12 @@ Make sure these are known or assumed:
 | carrier | preserve | implementation decision | notes |
 |---|---|---|---|
 
+## Asset manifest
+Use this when visible assets affect fidelity, even if the current implementation will use fallbacks.
+
+| id | area | decision | output | required for MVP | fallback | notes |
+|---|---|---|---|---|---|---|
+
 ## Existing constraints
 - reuse existing components:
 - reuse existing routes/data models:
@@ -102,7 +109,7 @@ Make sure these are known or assumed:
 - density:
 
 ## Code vs asset decisions
-[insert Asset Manifest or summary]
+[insert Asset Manifest or summary; do not omit when visible assets affect fidelity]
 
 ## Required states
 - default
@@ -117,7 +124,9 @@ Make sure these are known or assumed:
 - Build structure first.
 - Use `references/02-visual-reading-checklist.md` to translate image details into code decisions.
 - Use `references/03-design-translation.md` to make source-of-truth, preserve/adapt/ignore, fidelity, and priority decisions explicit.
+- Use `references/04-asset-workflow.md` when the reference includes illustrations, logos, source badges, cover art, brand-like marks, or other visible assets.
 - Preserve the listed style carriers; do not only recreate the information architecture.
+- Do not silently downgrade visible style-carrying assets to CSS fallbacks; mark fallbacks and ask for confirmation.
 - Follow the approved Design Translation Summary; do not replace it with private reinterpretation during implementation.
 - Match information hierarchy before visual decoration.
 - Prefer code for layout and normal UI.
