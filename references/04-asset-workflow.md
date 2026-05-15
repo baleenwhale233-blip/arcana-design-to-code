@@ -106,6 +106,81 @@ When an asset is missing:
 CSS fallback is a temporary implementation decision, not a substitute for asset planning.
 If a fallback replaces a visible style carrier, mark it clearly in the Asset Manifest and ask whether it should become a Source or Generate asset before implementation.
 
+## Generate Asset Workflow
+
+Use this only after the user approves generation or the current runtime explicitly allows Codex/imagegen for the requested asset.
+
+Generate is appropriate when the approved Asset Manifest marks an asset as Generate and the asset materially affects fidelity, such as:
+
+- empty-state illustration
+- cover placeholder
+- mascot or hero object
+- brand-like visual motif
+- complex background artwork
+
+Do not generate:
+
+- official logos
+- vendor/source marks
+- normal UI controls
+- text-heavy UI screenshots
+- anything the project should load from source data
+
+### Before generation
+
+For each Generate row, prepare:
+
+- asset id
+- placement and display size
+- required aspect ratio or pixel size
+- background requirement: transparent / white / green-screen / solid color
+- style carriers to preserve from the reference
+- must include
+- must avoid
+- fallback if generation fails
+
+If the reference image should guide the asset style, use image-to-image editing/generation with the reference image plus a targeted prompt.
+Do not ask imagegen to recreate the whole screen.
+Ask it to create only the isolated reusable asset.
+
+### Prompt shape
+
+```md
+Create an isolated [asset type] for [placement].
+Match the reference UI's [style carriers: color, material, line weight, mood].
+Size/aspect: [target].
+Background: [transparent / white / green-screen / solid].
+Must include: [...]
+Must avoid: text, UI controls, logos, full-screen mockup, unwanted background.
+Output should be reusable in the app UI.
+```
+
+### After generation
+
+Verify:
+
+- the asset matches the requested role and placement
+- text is absent unless explicitly requested
+- no official logo has been hallucinated
+- transparent assets really have alpha
+- no checkerboard, fake matte, white spill, or green spill remains
+- crop and padding match intended display size
+- the asset still works if the fallback is used instead
+
+If transparency or padding is wrong, use `scripts/prepare_image_asset.py`.
+If the generated concept is wrong, regenerate with a narrower prompt.
+
+### Generated asset output
+
+Save generated assets with stable names:
+
+```text
+assets/generated/[page-or-feature]/[asset-id].png
+```
+
+If the host project has an existing asset convention, follow that convention instead.
+Record the final file path in the Asset Manifest before implementation.
+
 ## Image Request template
 
 ```md

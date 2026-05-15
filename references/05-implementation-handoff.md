@@ -75,8 +75,8 @@ Make sure these are known or assumed:
 ## Asset manifest
 Use this for every image-based design-to-code request, even if the result is "no formal assets required".
 
-| id | area | decision | output | required for MVP | fallback | needs user decision | notes |
-|---|---|---|---|---|---|---|---|
+| id | area | decision | output | required for MVP | fallback | needs user decision | generation plan / source path | notes |
+|---|---|---|---|---|---|---|---|---|
 
 ## Existing constraints
 - reuse existing components:
@@ -111,6 +111,18 @@ Use this for every image-based design-to-code request, even if the result is "no
 ## Code vs asset decisions
 [insert Asset Manifest or summary; do not omit for image-based requests]
 
+## Image generation requests
+Use this when any Asset Manifest row is marked Generate.
+
+- asset id:
+- imagegen mode: generate / image-to-image edit
+- reference image:
+- target size/aspect:
+- background:
+- prompt:
+- fallback:
+- acceptance checks:
+
 ## Required states
 - default
 - empty
@@ -127,6 +139,7 @@ Use this for every image-based design-to-code request, even if the result is "no
 - Use `references/04-asset-workflow.md` for every image-based request.
 - Preserve the listed style carriers; do not only recreate the information architecture.
 - Do not silently downgrade visible style-carrying assets to CSS fallbacks; mark fallbacks and ask for confirmation.
+- If the user approves Generate assets, run the Generate Asset Workflow before implementation and record generated file paths.
 - Follow the approved Design Translation Summary; do not replace it with private reinterpretation during implementation.
 - Match information hierarchy before visual decoration.
 - Prefer code for layout and normal UI.

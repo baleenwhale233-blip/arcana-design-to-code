@@ -12,6 +12,7 @@ This skill does not try to fully automate design generation. It focuses on:
 - translating design intent into implementation instructions
 - deciding what should be code vs image asset
 - asking for image assets only when needed
+- generating or editing approved image assets with imagegen when fidelity depends on them
 - implementing UI after the brief is approved
 - performing a light visual exit check before finishing
 
@@ -57,6 +58,7 @@ It does not:
 5. Asset Workflow
    Decide what should be code, source asset, generated asset, fallback, or ignored.
    Produce an Asset Manifest for image-based requests, even when no formal assets are required.
+   If the user approves Generate assets, create isolated reusable assets with imagegen/image-to-image instead of recreating the whole screen.
 
 6. Implementation or Handoff
    Always produce an Implementation Brief first, including concise Visual Reading and Design Translation summaries and an Asset Manifest for image-based requests.

@@ -133,6 +133,7 @@ If the reference contains no fidelity-relevant assets, output an Asset Manifest 
 Output:
 - asset manifest
 - image requests if needed
+- generated asset workflow when user approves generation
 - code fallbacks
 - optional asset cleanup command
 
@@ -178,6 +179,10 @@ When an image asset is needed, choose one:
 
 3. Fallback
    Implement a code-based placeholder if the asset is not required for MVP.
+
+If the approved Asset Manifest marks an item as Generate and the user approves Codex/imagegen, generate or edit the asset before implementation when it materially affects fidelity.
+Use the reference image plus the asset row to create a targeted imagegen request.
+After generation, verify transparency/background, crop/padding, target size, and visual fit before integrating it.
 
 ## Optional asset cleanup
 
