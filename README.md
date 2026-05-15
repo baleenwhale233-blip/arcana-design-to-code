@@ -1,6 +1,6 @@
 # arcana-design-to-code
 
-A lightweight design-to-code skill for turning product ideas, AI mockups, screenshots, or design references into implementation-ready UI.
+A lightweight design-to-code skill for turning product ideas, AI mockups, screenshots, or design references into implementation-ready briefs, with optional UI implementation after confirmation.
 
 This skill does not try to fully automate design generation. It focuses on:
 
@@ -9,7 +9,7 @@ This skill does not try to fully automate design generation. It focuses on:
 - translating design intent into implementation instructions
 - deciding what should be code vs image asset
 - asking for image assets only when needed
-- implementing UI directly when requested
+- implementing UI after the brief is approved
 - performing a light visual exit check before finishing
 
 ## What this skill is for
@@ -19,7 +19,8 @@ Use this skill when you want to:
 - turn an AI-generated mockup into a real app page
 - reconstruct a screenshot into product UI without pixel-chasing
 - convert design references into a coding-agent handoff
-- implement a UI directly from a reference image when working inside a codebase
+- generate a brief before implementing UI from a reference image
+- implement the approved brief in a codebase
 - decide which visual elements should become code and which should become assets
 - ask the user/GPT/Codex imagegen for missing image assets
 - clean up generated assets for implementation
@@ -54,8 +55,9 @@ It does not:
    Decide what should be code, source asset, generated asset, or ignored.
 
 6. Implementation or Handoff
-   If the user asks to build, implement, recreate, or restore the UI, inspect the codebase and implement directly.
-   If the user asks for a handoff, produce a clear brief for the coding agent.
+   Always produce an Implementation Brief first.
+   If the user approves the brief, inspect the codebase and implement.
+   If the user asks for a handoff only, stop after the brief.
 
 7. Exit Check
    Confirm the implementation is usable, coherent, visually aligned with the selected reference intent, and ready for deeper QA if needed.
@@ -79,10 +81,10 @@ MIT
 
 ## Example prompts
 
-Direct implementation from an AI mockup:
+Brief first, then optional implementation:
 
 ```text
-根据这张 GPT image2 生成的移动端 UI 图，在当前项目里实现页面。主视口 390x844，允许产品化调整，不要把整张图当背景。
+根据这张 GPT image2 生成的移动端 UI 图，先生成 implementation brief。主视口 390x844，允许产品化调整，不要把整张图当背景。等我确认后再实现。
 ```
 
 Implementation brief only:

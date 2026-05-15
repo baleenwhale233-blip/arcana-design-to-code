@@ -205,5 +205,5 @@ List details not visible in the image but required for implementation:
 
 ## Implementation rule
 
-When implementing directly, use these notes as the bridge between the image and code.
+When implementing after brief approval, use these notes as the bridge between the image and code.
 Do not include the full notes in the final answer unless the user asked for the design analysis.

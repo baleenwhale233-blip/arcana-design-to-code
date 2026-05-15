@@ -6,9 +6,11 @@ Produce a concise brief that a coding agent can implement without guessing.
 
 The handoff should translate design intent into product implementation.
 
-Use this only when the user explicitly asks for a brief, spec, plan, or handoff, or when implementation will happen in a separate coding session.
+Use this for every initial design-to-code request.
 
-If the user asks to build, implement, recreate, restore, or make the UI now, use Implementation Mode from `SKILL.md` instead of stopping here.
+Even if the user asks to build, implement, recreate, restore, or make the UI now, produce the brief first and stop for confirmation.
+
+Only use Implementation Mode from `SKILL.md` after the user approves the brief and explicitly asks to proceed.
 
 ## Before writing the handoff
 
@@ -113,6 +115,9 @@ Make sure these are known or assumed:
 
 ## Exit check
 Use `references/06-exit-check.md`.
+
+## Confirmation
+Ask: "确认按这个 brief 开始实现吗？"
 
 ## Handoff style
 
