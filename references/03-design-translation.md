@@ -69,6 +69,9 @@ May change:
 - card shapes when needed for usability
 - layout when adapting from mobile to desktop or desktop to mobile
 
+Do not loosen exact spacing, radius, or type sizes when the user explicitly asks for numeric values or the reference is a Fidelity Target.
+In that case, preserve measured values where possible and record uncertainty using `references/07-measurement-pass.md`.
+
 ## What to ignore
 
 Usually ignore:

@@ -8,6 +8,7 @@ This skill does not try to fully automate design generation. It focuses on:
 - identifying the role of reference images
 - producing a visible visual reading summary before implementation
 - producing a visible design translation summary before implementation
+- extracting measured/estimated design tokens when numeric fidelity matters
 - producing an Asset Manifest for image-based requests
 - translating design intent into implementation instructions
 - deciding what should be code vs image asset
@@ -37,6 +38,7 @@ It does not:
 
 - run pixel-level diff against AI mockups
 - treat AI mockups as Figma-level design specs
+- invent exact numbers from low-resolution or compressed images
 - generate images by default
 - block implementation on decorative details
 - replace a separate UI QA / regression workflow
@@ -52,21 +54,26 @@ It does not:
 3. Visual Reading
    Extract viewport, layout blocks, user flow, component inventory, visual tokens, style carriers, asset decisions, and hidden states.
 
-4. Design Translation
+4. Measurement Pass
+   When the user asks for concrete values such as radius, margins, padding, or font sizes, calibrate the image to the source reference viewport, then adapt measured tokens to the implementation target range.
+
+5. Design Translation
    Convert the reference into explicit source-of-truth, preserve/adapt/ignore, fidelity, and implementation-priority decisions.
 
-5. Asset Workflow
+6. Asset Workflow
    Decide what should be code, source asset, generated asset, fallback, or ignored.
    Produce an Asset Manifest for image-based requests, even when no formal assets are required.
    If the user approves Generate assets, create isolated reusable assets with imagegen/image-to-image instead of recreating the whole screen.
 
-6. Implementation or Handoff
+7. Implementation or Handoff
    Always produce an Implementation Brief first, including concise Visual Reading and Design Translation summaries and an Asset Manifest for image-based requests.
    If the user approves the brief, inspect the codebase and implement.
    If the user asks for a handoff only, stop after the brief.
 
-7. Exit Check
+8. Exit Check
    Confirm the implementation is usable, coherent, visually aligned with the selected reference intent, and ready for deeper QA if needed.
+
+The workflow is sequential. Agents should show a Step Ledger, complete one gate at a time, and stop for confirmation before code edits.
 
 ## Optional script
 
@@ -80,6 +87,23 @@ The script requires Pillow:
 ```bash
 python3 -m pip install Pillow
 ```
+
+`scripts/measure_ui_image.py` can be used during the Measurement Pass to convert explicit screenshot coordinates into CSS-pixel measurements and token candidates.
+
+Example:
+
+```bash
+python3 scripts/measure_ui_image.py screenshot.png \
+  --source-viewport 390x844 \
+  --target-viewport compact:360x800 \
+  --target-viewport large-phone:430x932 \
+  --rect card:16,132,358,180 \
+  --distance card-gap:16,312,16,328 \
+  --text title:24,54,220,34 \
+  --radius-probe card:16,132,358,180
+```
+
+Use the output as measurement evidence, then normalize it into responsive rules in the Implementation Brief.
 
 ## License
 
@@ -109,4 +133,10 @@ High-fidelity target:
 
 ```text
 这是一张已批准的 UI 截图，请按 Fidelity Target 处理，目标视口 375x812，尽量贴近主要布局、内容和视觉比例。
+```
+
+Numeric token extraction:
+
+```text
+这张图我要高保真还原。参考图适配 iPhone 15 / 390x844，请先读出具体数值：页面边距、卡片间距、圆角、按钮高度、字号和行高。实现需要适配 360x800 到 430x932，无法确定的值请标注 estimated/unknown。
 ```

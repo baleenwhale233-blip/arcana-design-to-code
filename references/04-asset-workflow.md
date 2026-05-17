@@ -92,19 +92,43 @@ Pay special attention when the reference includes:
 
 The agent must not generate images by default.
 
-When an asset is missing:
+When an asset is missing, do not silently choose fallback for style-carrying assets.
 
-1. If decorative:
+1. If it is low-value decorative noise:
    use a code fallback.
 
-2. If needed but not urgent:
-   write an Image Request.
+2. If it affects fidelity, mood, empty-state quality, card feel, brand-like motif, or another visible style carrier:
+   ask the user to choose Source, Generate, or Fallback before implementation.
 
-3. If user explicitly allows Codex/imagegen:
+3. If it is needed but not urgent:
+   write an Image Request and mark the fallback as temporary.
+
+4. If user explicitly allows Codex/imagegen:
    generate or edit the asset directly.
 
 CSS fallback is a temporary implementation decision, not a substitute for asset planning.
 If a fallback replaces a visible style carrier, mark it clearly in the Asset Manifest and ask whether it should become a Source or Generate asset before implementation.
+
+## Asset decision prompt
+
+Use this prompt whenever a missing asset would noticeably affect visual fidelity:
+
+```md
+## Asset Decision Needed
+
+The reference includes these style-carrying assets:
+
+| id | role | why it matters | options | recommended |
+|---|---|---|---|---|
+| [asset-id] | [placement] | [fidelity impact] | Source / Generate / Fallback | [choice + reason] |
+
+Please choose:
+- Source: you will provide or point me to the real asset
+- Generate: I may use imagegen to create an isolated reusable asset
+- Fallback: I will use the listed code/CSS fallback and mark the fidelity tradeoff
+```
+
+If there are multiple minor Generate candidates, batch them into one decision prompt instead of asking one question per asset.
 
 ## Generate Asset Workflow
 
@@ -280,6 +304,7 @@ Always:
 - provide a fallback
 - produce an Asset Manifest for every image-based design-to-code request
 - ask whether Source or Generate assets should be supplied when a fallback would noticeably reduce fidelity
+- ask the user to choose Source, Generate, or Fallback before implementation when a missing asset is a visible style carrier
 - save assets with clear names
 - document target display size
 - keep image assets separate and reusable

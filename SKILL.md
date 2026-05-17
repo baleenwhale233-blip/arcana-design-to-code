@@ -35,10 +35,51 @@ Load references only when needed:
 
 1. For vague requests or missing product context, read `references/01-intake-and-reference-intent.md`.
 2. For any supplied mockup, screenshot, or visual reference, read `references/02-visual-reading-checklist.md` and `references/03-design-translation.md`.
-3. For any supplied mockup, screenshot, or visual reference, read `references/04-asset-workflow.md` and produce an Asset Manifest. If there are no fidelity-relevant assets, say so explicitly.
-4. For every design-to-code request, read `references/05-implementation-handoff.md` and produce an Implementation Brief with visible Visual Reading and Design Translation summaries before editing code.
-5. Ask the user whether to proceed with implementation after the brief.
-6. Only after the user confirms implementation, use Implementation Mode and then use `references/06-exit-check.md` before finishing.
+3. If the user asks for accurate values, exact tokens, "具体数值", "圆角", "边距", "字号", "像素级", "高保真", or the reference is a Fidelity Target, read `references/07-measurement-pass.md` and produce Design Measurements.
+4. For any supplied mockup, screenshot, or visual reference, read `references/04-asset-workflow.md` and produce an Asset Manifest. If there are no fidelity-relevant assets, say so explicitly.
+5. For every design-to-code request, read `references/05-implementation-handoff.md` and produce an Implementation Brief with visible Visual Reading and Design Translation summaries before editing code.
+6. Ask the user whether to proceed with implementation after the brief.
+7. Only after the user confirms implementation, use Implementation Mode and then use `references/06-exit-check.md` before finishing.
+
+## Sequential gate protocol
+
+Follow the workflow as ordered gates, not as a loose checklist.
+
+At the start of any design-to-code response, create a visible Step Ledger:
+
+```md
+## Step Ledger
+1. Reference intent - pending/in progress/done
+2. Visual reading - pending/in progress/done
+3. Measurement pass - skipped/done, with reason
+4. Asset manifest - pending/in progress/done
+5. Implementation brief - pending/in progress/done
+6. Confirmation - pending
+7. Implementation - blocked until confirmation
+8. Exit check - blocked until implementation
+```
+
+Gate rules:
+
+- Complete gates in order.
+- Do not combine gates into one hidden reasoning pass.
+- Do not advance to the next gate until the current gate has a visible output section.
+- If a gate is skipped, mark it `skipped` and give the reason.
+- If required input is missing, either record a clear assumption or ask one blocking question, then stop at that gate.
+- If you notice you skipped a gate, say so briefly, return to the missing gate, and continue from there.
+- Do not edit code until gates 1-6 are done and the user explicitly confirms implementation.
+- During implementation, follow the approved brief; do not re-run earlier gates silently unless new information changes the brief.
+
+Required visible outputs by gate:
+
+1. Reference intent: role, fidelity, source of truth, binding vs non-binding.
+2. Visual reading: viewport, layout blocks, user flow, component inventory, visual tokens, style carriers.
+3. Measurement pass: required only for numeric fidelity; source viewport, measured/estimated/inferred values, adaptation targets.
+4. Asset manifest: code/source/generate/fallback/ignore decisions, even if no formal assets are needed.
+5. Implementation brief: the full handoff from `references/05-implementation-handoff.md`.
+6. Confirmation: ask whether to implement; stop.
+7. Implementation: code changes only after confirmation.
+8. Exit check: use `references/06-exit-check.md`.
 
 ## Hard rules
 
@@ -57,6 +98,7 @@ Never:
 - treat "code-first" as permission to skip an Asset Manifest
 - treat phrases like "build", "implement", "recreate", "restore", "还原", or "做出来" as approval to skip the brief
 - continue from brief to implementation until the user explicitly confirms
+- skip, merge, or hide required workflow gates when the user is testing or relying on this skill
 
 Always:
 - identify platform and primary viewport
@@ -70,10 +112,14 @@ Always:
 - provide fallbacks for missing decorative assets
 - include a concise Visual Reading Summary in the initial brief
 - include a concise Design Translation Summary in the initial brief
+- include Design Measurements when numeric fidelity is requested or the image is a Fidelity Target
+- ask for or infer the reference source viewport before treating measured values as CSS pixels
+- adapt measured values into responsive implementation tokens instead of locking layout to the reference bitmap size
 - identify the style carriers that make the reference feel like itself
 - include an Asset Manifest in the initial brief for every image-based design-to-code request
 - produce an Implementation Brief before implementation
 - ask for confirmation before editing code
+- show the Step Ledger for image-based design-to-code requests and update it as gates complete
 
 ## Modes
 
@@ -88,10 +134,12 @@ Ask only blocking questions. Do not turn intake into a long questionnaire.
 Use when the user provides a mockup, screenshot, or design direction.
 
 Read `references/02-visual-reading-checklist.md` first when an image is available.
+If numeric fidelity is requested, read `references/07-measurement-pass.md` before producing the brief.
 
 Output:
 - concise Visual Reading Summary
 - concise Design Translation Summary
+- Design Measurements when requested or required by fidelity
 - source of truth
 - what to preserve
 - what may change
@@ -172,13 +220,13 @@ The agent must not generate images by default.
 When an image asset is needed, choose one:
 
 1. Ask
-   Write an Image Request for the user/GPT to generate.
+   If the asset affects fidelity or is a visible style carrier, ask the user to choose Source, Generate, or Fallback.
 
 2. Generate with approval
    Use Codex/imagegen only if the user explicitly allows it.
 
 3. Fallback
-   Implement a code-based placeholder if the asset is not required for MVP.
+   Implement a code-based placeholder only if the asset is low-value decoration or the user chooses Fallback.
 
 If the approved Asset Manifest marks an item as Generate and the user approves Codex/imagegen, generate or edit the asset before implementation when it materially affects fidelity.
 Use the reference image plus the asset row to create a targeted imagegen request.

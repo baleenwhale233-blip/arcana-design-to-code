@@ -17,6 +17,7 @@ Only use Implementation Mode from `SKILL.md` after the user approves the brief a
 Make sure these are known or assumed:
 
 - visual reading notes
+- design measurements when numeric fidelity is requested
 - design translation summary
 - style carriers
 - product/page goal
@@ -34,6 +35,16 @@ Make sure these are known or assumed:
 
 ```md
 # Implementation Brief
+
+## Step Ledger
+1. Reference intent - done
+2. Visual reading - done
+3. Measurement pass - skipped/done: [reason]
+4. Asset manifest - done
+5. Implementation brief - done
+6. Confirmation - pending
+7. Implementation - blocked until confirmation
+8. Exit check - blocked until implementation
 
 ## Page
 [page name]
@@ -54,8 +65,21 @@ Make sure these are known or assumed:
 ## Visual reading summary
 - layout blocks:
 - visual tokens:
+- design measurements:
 - style carriers:
 - code-vs-asset summary:
+
+## Design measurements
+Include this section when numeric fidelity is requested or the reference is a Fidelity Target.
+
+- calibration:
+- measured values:
+- estimated values:
+- inferred values:
+- adaptation targets:
+- responsive token recommendations:
+- unknowns:
+- tokens to use:
 
 ## Design translation summary
 - source of truth:
@@ -113,6 +137,7 @@ Use this for every image-based design-to-code request, even if the result is "no
 
 ## Image generation requests
 Use this when any Asset Manifest row is marked Generate.
+If a visible style-carrying asset is missing and the user has not chosen Source, Generate, or Fallback yet, stop here and ask for that asset decision before implementation.
 
 - asset id:
 - imagegen mode: generate / image-to-image edit
@@ -133,6 +158,7 @@ Use this when any Asset Manifest row is marked Generate.
 - long text where relevant
 
 ## Implementation rules
+- Respect the Step Ledger. If an earlier gate is missing, stop and complete that gate before implementation.
 - Build structure first.
 - Use `references/02-visual-reading-checklist.md` to translate image details into code decisions.
 - Use `references/03-design-translation.md` to make source-of-truth, preserve/adapt/ignore, fidelity, and priority decisions explicit.

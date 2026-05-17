@@ -122,6 +122,9 @@ Record:
 
 Avoid vague instructions like "make it premium" unless translated into concrete tokens.
 
+If the user asks for accurate values, exact tokens, "具体数值", "圆角", "边距", "字号", "像素级", "高保真", or the reference is a Fidelity Target, run the Measurement Pass in `references/07-measurement-pass.md`.
+Do not hide measurement uncertainty. Mark values as measured, estimated, inferred, or unknown.
+
 ### 7. Style carriers
 
 Identify the few details that carry the design's recognizable flavor.
@@ -213,6 +216,13 @@ List details not visible in the image but required for implementation:
 - radius:
 - shadow:
 - density:
+
+## Design Measurements
+- include when numeric fidelity is requested or required:
+- measured values:
+- estimated values:
+- inferred values:
+- unknowns:
 
 ## Style Carriers
 | carrier | preserve | implementation decision | notes |
