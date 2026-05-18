@@ -53,6 +53,7 @@ Examples:
 - product screenshot
 
 Do not redraw official logos with AI unless explicitly requested.
+A crop from a supplied screenshot or mockup is not Source unless the screenshot itself is the intended source media. Source requires an independent file, URL, project asset, official asset, or data-provided media.
 
 ### 4. Generate
 
@@ -66,10 +67,13 @@ Examples:
 - complex decorative artwork
 - brand-like visual motif
 - cover art placeholder that defines the card feel
+- sticker-like or irregular silhouette object that needs transparent edges
 
 ## Default
 
 Start with zero custom image assets.
+
+Before deciding that zero custom image assets are needed, run the Generate Candidate Scan in `references/09-generate-candidate-scan.md` when the reference includes non-UI visuals or style-carrying artwork.
 
 Only create an image asset when:
 - it is visually central
@@ -91,8 +95,10 @@ Pay special attention when the reference includes:
 ## Image generation permission
 
 The agent must not generate images by default.
+If the user explicitly asks the agent to identify image-to-image assets, keep that classification. Ask before generating, but do not downgrade the asset to crop/fallback just because generation needs approval.
 
 When an asset is missing, do not silently choose fallback for style-carrying assets.
+Fallback is an option to present to the user, not the default decision for fidelity-relevant missing assets.
 
 1. If it is low-value decorative noise:
    use a code fallback.
@@ -108,6 +114,7 @@ When an asset is missing, do not silently choose fallback for style-carrying ass
 
 CSS fallback is a temporary implementation decision, not a substitute for asset planning.
 If a fallback replaces a visible style carrier, mark it clearly in the Asset Manifest and ask whether it should become a Source or Generate asset before implementation.
+If image generation is unavailable or not approved, ask the user to choose Source or Fallback instead of silently choosing Fallback.
 
 ## Asset decision prompt
 
@@ -166,6 +173,7 @@ For each Generate row, prepare:
 If the reference image should guide the asset style, use image-to-image editing/generation with the reference image plus a targeted prompt.
 Do not ask imagegen to recreate the whole screen.
 Ask it to create only the isolated reusable asset.
+If the asset is embedded in a screenshot, use the crop only as style/silhouette guidance, not as the final asset.
 
 ### Prompt shape
 
@@ -190,6 +198,15 @@ Verify:
 - no checkerboard, fake matte, white spill, or green spill remains
 - crop and padding match intended display size
 - the asset still works if the fallback is used instead
+
+For style-carrying mascots, hero objects, stickers, soft/3D objects, illustrations, or irregular silhouettes, also verify:
+
+- the output is an independent asset, not a rectangular screenshot crop
+- no UI fragment, background patch, shadow box, or surrounding screenshot residue remains
+- edges are clean on light, dark, and brand-colored backgrounds
+- transparent padding allows the object to overlap or protrude from its intended container
+- resolution is at least 2x the intended display size
+- the asset can be moved, layered, and reused separately from the reference image
 
 If transparency or padding is wrong, use `scripts/prepare_image_asset.py`.
 If the generated concept is wrong, regenerate with a narrower prompt.
@@ -249,6 +266,9 @@ transparent / white / green-screen / solid color / no preference
 ## Summary
 [formal assets required / no formal assets required]
 
+## Generate Candidate Scan
+[insert candidate table from references/09-generate-candidate-scan.md, or state that no candidates were found and why]
+
 | id | area | decision | output | required for MVP | fallback | needs user decision | notes |
 |---|---|---|---|---|---|---|---|
 | app-logo | top nav | Source | existing logo component | yes | text label | yes if missing | do not redraw |
@@ -257,6 +277,7 @@ transparent / white / green-screen / solid color / no preference
 | background-noise | page bg | Ignore | none | no | none | no | low value |
 | source-logo | list/card source mark | Source | official logo asset | yes | text/source initials | yes if missing | do not redraw; ask user if missing |
 | cover-placeholder | card cover visual | Source/Generate/Fallback | existing cover image or generated placeholder | no | gradient placeholder | yes if fidelity matters | fallback is temporary if visual fidelity matters |
+| mascot-object | sheet/header overlap | Image-to-image | transparent PNG/WebP | no | approved simple icon/object fallback | yes | screenshot crop is reference only, not Source |
 ```
 
 ## Transparency rule
@@ -295,6 +316,7 @@ Never:
 
 - use the full mockup as a background image
 - crop low-resolution UI fragments as final assets by default
+- use a cropped rectangular screenshot, clip-path mask, or border-radius mask to fake a visible irregular mascot, illustration, sticker, or hero object
 - mix large illustrations, logos, and tiny icons into one sprite sheet
 - block implementation on decorative assets
 - generate normal UI controls as images
@@ -308,3 +330,4 @@ Always:
 - save assets with clear names
 - document target display size
 - keep image assets separate and reusable
+- keep embedded screenshot objects classified as Generate/Image-to-image unless a true source asset exists or the user explicitly accepts fallback

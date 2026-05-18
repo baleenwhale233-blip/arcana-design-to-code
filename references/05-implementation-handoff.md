@@ -43,10 +43,11 @@ Make sure these are known or assumed:
 3. Measurement pass - skipped/done: [reason]
 4. Viewport budget - skipped/done: [reason]
 5. Asset manifest - done
-6. Implementation brief - done
-7. Confirmation - pending
-8. Implementation - blocked until confirmation
-9. Exit check - blocked until implementation
+6. Design translation - done
+7. Implementation brief - done
+8. Confirmation - pending
+9. Implementation - blocked until confirmation
+10. Exit check - blocked until implementation
 
 ## Page
 [page name]
@@ -115,6 +116,8 @@ Include this section for full-screen mobile, player-like, dashboard-like, tool-l
 ## Asset manifest
 Use this for every image-based design-to-code request, even if the result is "no formal assets required".
 
+Include the Generate Candidate Scan when the reference contains non-UI visuals or style-carrying artwork.
+
 | id | area | decision | output | required for MVP | fallback | needs user decision | generation plan / source path | notes |
 |---|---|---|---|---|---|---|---|---|
 
@@ -176,6 +179,9 @@ If a visible style-carrying asset is missing and the user has not chosen Source,
 ## Implementation rules
 - Respect the Step Ledger. If an earlier gate is missing, stop and complete that gate before implementation.
 - Respect the Viewport Budget. Do not add min-heights, margins, shell padding, or control gaps that make the target viewport overflow unless the brief explicitly allows scrolling.
+- Respect the Asset Decision Gate. Do not silently choose Fallback for missing style-carrying assets; ask Source / Generate / Fallback before implementation.
+- Do not treat embedded screenshot objects as Source assets. If a mascot, hero object, sticker, illustration, soft/3D object, or irregular silhouette is not available as an independent file, keep it as Generate/Image-to-image or explicit fallback.
+- For protruding assets, make the asset a separate layered element. The outer visual container should allow overflow; put scrolling and clipping on the inner content region.
 - Build structure first.
 - Use `references/02-visual-reading-checklist.md` to translate image details into code decisions.
 - Use `references/03-design-translation.md` to make source-of-truth, preserve/adapt/ignore, fidelity, and priority decisions explicit.
@@ -203,7 +209,8 @@ If a visible style-carrying asset is missing and the user has not chosen Source,
 Use `references/06-exit-check.md`.
 
 ## Confirmation
-Ask: "确认按这个 brief 开始实现吗？"
+If any Asset Manifest row still needs a Source / Generate / Fallback decision, ask for that decision first and do not ask for implementation approval yet.
+After asset decisions are settled, ask: "确认按这个 brief 开始实现吗？"
 
 ## Handoff style
 

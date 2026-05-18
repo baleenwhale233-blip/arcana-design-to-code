@@ -162,6 +162,8 @@ For each distinct visual element, decide:
 Do not use the full mockup as a page background.
 Do not crop normal UI controls from the image.
 
+If the reference includes non-UI visuals, artwork, avatars, thumbnails, cover art, empty-state illustrations, hero objects, or brand-like motifs, run `references/09-generate-candidate-scan.md` before finalizing asset decisions.
+
 ### 9. Product gaps and hidden states
 
 List details not visible in the image but required for implementation:

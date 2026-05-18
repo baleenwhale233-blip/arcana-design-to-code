@@ -69,7 +69,11 @@ Read SKILL.md first, then load only the referenced files for the current gate.
 Produce an Implementation Brief before code edits.
 For numeric fidelity, run Measurement Pass.
 For constrained-height screens, run Viewport Budget Pass.
+For non-UI visuals or style-carrying artwork, run Generate Candidate Scan before Asset Manifest.
 For style-carrying assets, ask Source / Generate / Fallback before implementation.
+Never silently choose Fallback for assets that affect fidelity, mood, empty-state quality, card feel, brand-like motifs, or other visible style carriers.
+Screenshot crops are not Source assets for embedded mascots, hero objects, illustrations, or irregular silhouettes; classify them as Generate/Image-to-image unless an independent source file exists.
+If image generation is unavailable or not approved, ask the user instead of choosing Fallback.
 Do not implement until I confirm the brief.
 ```
 
@@ -92,20 +96,24 @@ If the agent cannot run scripts, it should still complete the matching pass manu
 5. Viewport Budget
    For constrained-height, full-screen mobile, player-like, tool-like, or no-scroll screens, sum the planned CSS height of shell padding, fixed sections, controls, gaps, and bottom tools before implementation.
 
-6. Design Translation
-   Convert the reference into explicit source-of-truth, preserve/adapt/ignore, fidelity, and implementation-priority decisions.
+6. Generate Candidate Scan
+   For non-UI visuals, artwork, avatars, thumbnails, cover art, empty-state illustrations, hero objects, or brand-like motifs, classify candidates as Source / Generate / Image-to-image / Code / Ignore.
 
 7. Asset Workflow
    Decide what should be code, source asset, generated asset, fallback, or ignored.
    Produce an Asset Manifest for image-based requests, even when no formal assets are required.
    If the user approves Generate assets, create isolated reusable assets with imagegen/image-to-image instead of recreating the whole screen.
 
-8. Implementation or Handoff
+8. Design Translation
+   Convert the reference into explicit source-of-truth, preserve/adapt/ignore, fidelity, and implementation-priority decisions using the visual reading, measurements, viewport budget, and asset manifest.
+
+9. Implementation Brief and Confirmation
    Always produce an Implementation Brief first, including concise Visual Reading and Design Translation summaries and an Asset Manifest for image-based requests.
+   If the Asset Manifest has unresolved visible style-carrying assets, ask for Source / Generate / Fallback before asking for implementation approval.
    If the user approves the brief, inspect the codebase and implement.
    If the user asks for a handoff only, stop after the brief.
 
-9. Exit Check
+10. Exit Check
    Confirm the implementation is usable, coherent, visually aligned with the selected reference intent, and ready for deeper QA if needed.
 
 The workflow is sequential. Agents should show a Step Ledger, complete one gate at a time, and stop for confirmation before code edits.

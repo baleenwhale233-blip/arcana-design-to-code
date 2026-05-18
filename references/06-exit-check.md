@@ -16,6 +16,8 @@ Before finishing, check:
 - Required empty/loading/error/success states are not obviously missing.
 - Custom assets are either integrated or replaced with acceptable fallbacks.
 - Asset fallbacks match the approved Asset Manifest; Source/Generate assets are not silently downgraded.
+- Style-carrying irregular assets are independent transparent assets or explicitly approved fallbacks, not rectangular screenshot crops.
+- Protruding assets are not clipped by the outer sheet/card/container; scroll clipping is on the intended inner region.
 - Constrained-height screens fit the approved Viewport Budget or explicitly use the approved scroll policy.
 - The implementation does not use the mockup as a full-page image.
 - Ordinary UI controls are implemented as code, not cropped images.
