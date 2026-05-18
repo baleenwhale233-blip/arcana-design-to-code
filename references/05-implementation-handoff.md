@@ -18,6 +18,7 @@ Make sure these are known or assumed:
 
 - visual reading notes
 - design measurements when numeric fidelity is requested
+- viewport budget when height is constrained
 - design translation summary
 - style carriers
 - product/page goal
@@ -40,11 +41,12 @@ Make sure these are known or assumed:
 1. Reference intent - done
 2. Visual reading - done
 3. Measurement pass - skipped/done: [reason]
-4. Asset manifest - done
-5. Implementation brief - done
-6. Confirmation - pending
-7. Implementation - blocked until confirmation
-8. Exit check - blocked until implementation
+4. Viewport budget - skipped/done: [reason]
+5. Asset manifest - done
+6. Implementation brief - done
+7. Confirmation - pending
+8. Implementation - blocked until confirmation
+9. Exit check - blocked until implementation
 
 ## Page
 [page name]
@@ -80,6 +82,20 @@ Include this section when numeric fidelity is requested or the reference is a Fi
 - responsive token recommendations:
 - unknowns:
 - tokens to use:
+
+## Viewport budget
+Include this section for full-screen mobile, player-like, dashboard-like, tool-like, or no-scroll target screens.
+
+- target viewport:
+- scroll policy:
+- available height:
+- shell/safe padding:
+- section height budget:
+- gap/padding budget:
+- total planned height:
+- remaining/overflow:
+- compression plan:
+- CSS constraints to avoid:
 
 ## Design translation summary
 - source of truth:
@@ -159,6 +175,7 @@ If a visible style-carrying asset is missing and the user has not chosen Source,
 
 ## Implementation rules
 - Respect the Step Ledger. If an earlier gate is missing, stop and complete that gate before implementation.
+- Respect the Viewport Budget. Do not add min-heights, margins, shell padding, or control gaps that make the target viewport overflow unless the brief explicitly allows scrolling.
 - Build structure first.
 - Use `references/02-visual-reading-checklist.md` to translate image details into code decisions.
 - Use `references/03-design-translation.md` to make source-of-truth, preserve/adapt/ignore, fidelity, and priority decisions explicit.

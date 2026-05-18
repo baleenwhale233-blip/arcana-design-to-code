@@ -29,6 +29,32 @@ Default to:
 - visible asset scan and manifest before implementation
 - light exit checks over heavy QA
 
+## Portable agent guidance
+
+This folder can be used outside Codex by any agent that supports custom instructions, project rules, knowledge files, or tool/script execution.
+
+If the host agent does not have native Skill support:
+
+- Treat this `SKILL.md` as the primary project instruction.
+- Keep `references/` available as linked knowledge files and load only the referenced file for the active gate.
+- Keep `scripts/` available as optional local utilities. If scripts cannot be run, perform the same pass manually and mark values as estimated/inferred.
+- Follow the Step Ledger exactly and show it in the response.
+- Stop at Confirmation before editing code, unless the user has already approved the specific Implementation Brief in the same conversation.
+- When tool names differ, use the host agent's equivalent for reading files, editing code, running scripts, previewing the app, and capturing screenshots.
+
+Portable entry prompt for generic agents:
+
+```text
+Use the arcana-design-to-code workflow strictly.
+Follow the Step Ledger in order and do not merge or skip gates.
+Read SKILL.md first, then load only the referenced files for the current gate.
+Produce an Implementation Brief before code edits.
+For numeric fidelity, run Measurement Pass.
+For constrained-height screens, run Viewport Budget Pass.
+For style-carrying assets, ask Source / Generate / Fallback before implementation.
+Do not implement until I confirm the brief.
+```
+
 ## Main workflow
 
 Load references only when needed:
@@ -36,10 +62,11 @@ Load references only when needed:
 1. For vague requests or missing product context, read `references/01-intake-and-reference-intent.md`.
 2. For any supplied mockup, screenshot, or visual reference, read `references/02-visual-reading-checklist.md` and `references/03-design-translation.md`.
 3. If the user asks for accurate values, exact tokens, "具体数值", "圆角", "边距", "字号", "像素级", "高保真", or the reference is a Fidelity Target, read `references/07-measurement-pass.md` and produce Design Measurements.
-4. For any supplied mockup, screenshot, or visual reference, read `references/04-asset-workflow.md` and produce an Asset Manifest. If there are no fidelity-relevant assets, say so explicitly.
-5. For every design-to-code request, read `references/05-implementation-handoff.md` and produce an Implementation Brief with visible Visual Reading and Design Translation summaries before editing code.
-6. Ask the user whether to proceed with implementation after the brief.
-7. Only after the user confirms implementation, use Implementation Mode and then use `references/06-exit-check.md` before finishing.
+4. If the UI is constrained by viewport height, full-screen mobile, player-like, dashboard-like, or intended not to scroll, read `references/08-viewport-budget-pass.md` and produce a Viewport Budget.
+5. For any supplied mockup, screenshot, or visual reference, read `references/04-asset-workflow.md` and produce an Asset Manifest. If there are no fidelity-relevant assets, say so explicitly.
+6. For every design-to-code request, read `references/05-implementation-handoff.md` and produce an Implementation Brief with visible Visual Reading and Design Translation summaries before editing code.
+7. Ask the user whether to proceed with implementation after the brief.
+8. Only after the user confirms implementation, use Implementation Mode and then use `references/06-exit-check.md` before finishing.
 
 ## Sequential gate protocol
 
@@ -52,11 +79,12 @@ At the start of any design-to-code response, create a visible Step Ledger:
 1. Reference intent - pending/in progress/done
 2. Visual reading - pending/in progress/done
 3. Measurement pass - skipped/done, with reason
-4. Asset manifest - pending/in progress/done
-5. Implementation brief - pending/in progress/done
-6. Confirmation - pending
-7. Implementation - blocked until confirmation
-8. Exit check - blocked until implementation
+4. Viewport budget - skipped/done, with reason
+5. Asset manifest - pending/in progress/done
+6. Implementation brief - pending/in progress/done
+7. Confirmation - pending
+8. Implementation - blocked until confirmation
+9. Exit check - blocked until implementation
 ```
 
 Gate rules:
@@ -67,7 +95,7 @@ Gate rules:
 - If a gate is skipped, mark it `skipped` and give the reason.
 - If required input is missing, either record a clear assumption or ask one blocking question, then stop at that gate.
 - If you notice you skipped a gate, say so briefly, return to the missing gate, and continue from there.
-- Do not edit code until gates 1-6 are done and the user explicitly confirms implementation.
+- Do not edit code until gates 1-7 are done and the user explicitly confirms implementation.
 - During implementation, follow the approved brief; do not re-run earlier gates silently unless new information changes the brief.
 
 Required visible outputs by gate:
@@ -75,11 +103,12 @@ Required visible outputs by gate:
 1. Reference intent: role, fidelity, source of truth, binding vs non-binding.
 2. Visual reading: viewport, layout blocks, user flow, component inventory, visual tokens, style carriers.
 3. Measurement pass: required only for numeric fidelity; source viewport, measured/estimated/inferred values, adaptation targets.
-4. Asset manifest: code/source/generate/fallback/ignore decisions, even if no formal assets are needed.
-5. Implementation brief: the full handoff from `references/05-implementation-handoff.md`.
-6. Confirmation: ask whether to implement; stop.
-7. Implementation: code changes only after confirmation.
-8. Exit check: use `references/06-exit-check.md`.
+4. Viewport budget: required for constrained-height or no-scroll UIs; available height, section heights, gap/padding totals, remaining/overflow, compression plan.
+5. Asset manifest: code/source/generate/fallback/ignore decisions, even if no formal assets are needed.
+6. Implementation brief: the full handoff from `references/05-implementation-handoff.md`.
+7. Confirmation: ask whether to implement; stop.
+8. Implementation: code changes only after confirmation.
+9. Exit check: use `references/06-exit-check.md`.
 
 ## Hard rules
 
@@ -96,6 +125,8 @@ Never:
 - skip Asset Workflow because the agent plans to use code or CSS fallback
 - replace asset decisions with unreviewed CSS fallbacks
 - treat "code-first" as permission to skip an Asset Manifest
+- treat screenshot height as usable CSS content height without subtracting shell/header/safe/control budgets
+- rely on scrolling to fix overflow in full-screen mobile, player-like, or tool-like screens unless the brief says the page is a content flow
 - treat phrases like "build", "implement", "recreate", "restore", "还原", or "做出来" as approval to skip the brief
 - continue from brief to implementation until the user explicitly confirms
 - skip, merge, or hide required workflow gates when the user is testing or relying on this skill
@@ -115,6 +146,7 @@ Always:
 - include Design Measurements when numeric fidelity is requested or the image is a Fidelity Target
 - ask for or infer the reference source viewport before treating measured values as CSS pixels
 - adapt measured values into responsive implementation tokens instead of locking layout to the reference bitmap size
+- include a Viewport Budget for constrained-height UI before implementation
 - identify the style carriers that make the reference feel like itself
 - include an Asset Manifest in the initial brief for every image-based design-to-code request
 - produce an Implementation Brief before implementation

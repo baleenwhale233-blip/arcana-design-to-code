@@ -43,6 +43,38 @@ It does not:
 - block implementation on decorative details
 - replace a separate UI QA / regression workflow
 
+## Portable use
+
+This bundle can be used in Codex or in generic agents such as WorkBuddy, Cursor, Claude, or other tools with custom project rules.
+
+For native Codex skill use, install the folder as:
+
+```text
+~/.codex/skills/arcana-design-to-code/
+```
+
+For generic agents:
+
+1. Add `SKILL.md` as the main project rule or custom instruction.
+2. Add `references/` as knowledge files.
+3. Add `scripts/` as optional local utilities if the agent can run scripts.
+4. Tell the agent to follow the Step Ledger and stop for confirmation before code edits.
+
+Portable entry prompt:
+
+```text
+Use the arcana-design-to-code workflow strictly.
+Follow the Step Ledger in order and do not merge or skip gates.
+Read SKILL.md first, then load only the referenced files for the current gate.
+Produce an Implementation Brief before code edits.
+For numeric fidelity, run Measurement Pass.
+For constrained-height screens, run Viewport Budget Pass.
+For style-carrying assets, ask Source / Generate / Fallback before implementation.
+Do not implement until I confirm the brief.
+```
+
+If the agent cannot run scripts, it should still complete the matching pass manually and mark values as `estimated`, `inferred`, or `unknown`.
+
 ## Core workflow
 
 1. Intake
@@ -57,20 +89,23 @@ It does not:
 4. Measurement Pass
    When the user asks for concrete values such as radius, margins, padding, or font sizes, calibrate the image to the source reference viewport, then adapt measured tokens to the implementation target range.
 
-5. Design Translation
+5. Viewport Budget
+   For constrained-height, full-screen mobile, player-like, tool-like, or no-scroll screens, sum the planned CSS height of shell padding, fixed sections, controls, gaps, and bottom tools before implementation.
+
+6. Design Translation
    Convert the reference into explicit source-of-truth, preserve/adapt/ignore, fidelity, and implementation-priority decisions.
 
-6. Asset Workflow
+7. Asset Workflow
    Decide what should be code, source asset, generated asset, fallback, or ignored.
    Produce an Asset Manifest for image-based requests, even when no formal assets are required.
    If the user approves Generate assets, create isolated reusable assets with imagegen/image-to-image instead of recreating the whole screen.
 
-7. Implementation or Handoff
+8. Implementation or Handoff
    Always produce an Implementation Brief first, including concise Visual Reading and Design Translation summaries and an Asset Manifest for image-based requests.
    If the user approves the brief, inspect the codebase and implement.
    If the user asks for a handoff only, stop after the brief.
 
-8. Exit Check
+9. Exit Check
    Confirm the implementation is usable, coherent, visually aligned with the selected reference intent, and ready for deeper QA if needed.
 
 The workflow is sequential. Agents should show a Step Ledger, complete one gate at a time, and stop for confirmation before code edits.
@@ -104,6 +139,29 @@ python3 scripts/measure_ui_image.py screenshot.png \
 ```
 
 Use the output as measurement evidence, then normalize it into responsive rules in the Implementation Brief.
+
+`scripts/viewport_budget.py` can be used before implementation to check that a constrained-height screen fits its target viewport.
+
+Example:
+
+```bash
+python3 scripts/viewport_budget.py \
+  --viewport 390x844 \
+  --scroll-policy no-scroll \
+  --reserve shell-top:16 \
+  --reserve shell-bottom:20 \
+  --item header:48 \
+  --item cover:320 \
+  --item title:54 \
+  --item progress:34 \
+  --item controls:72 \
+  --item tools:56 \
+  --gap header-cover:10 \
+  --gap cover-title:14 \
+  --gap title-progress:14 \
+  --gap progress-controls:16 \
+  --gap controls-tools:18
+```
 
 ## License
 

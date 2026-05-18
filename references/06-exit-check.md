@@ -16,6 +16,7 @@ Before finishing, check:
 - Required empty/loading/error/success states are not obviously missing.
 - Custom assets are either integrated or replaced with acceptable fallbacks.
 - Asset fallbacks match the approved Asset Manifest; Source/Generate assets are not silently downgraded.
+- Constrained-height screens fit the approved Viewport Budget or explicitly use the approved scroll policy.
 - The implementation does not use the mockup as a full-page image.
 - Ordinary UI controls are implemented as code, not cropped images.
 - The implementation does not introduce unnecessary dependencies.
@@ -46,6 +47,7 @@ Open the page in the target viewport and inspect:
 - content density
 - typography scale
 - major spacing
+- viewport budget: fixed sections, gaps, min-heights, safe padding, and overflow behavior
 - color mood
 - component consistency
 - obvious broken styles
@@ -90,6 +92,7 @@ Stop when the page is:
 - coherent
 - aligned with the selected reference intent
 - checked in the target viewport when practical
+- within the approved height budget when the screen is constrained-height
 - implementation-ready
 
 Full QA belongs to a separate UI-QA workflow.
